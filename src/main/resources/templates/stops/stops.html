@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stops</title>
+    <link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
+    <link href="../../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
+    <style>
+    </style>
+</head>
+<body>
+<div>
+    <table class="mb-2">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stop : ${stops}">
+            <td th:text="${stop.id}">1</td>
+            <td th:text="${stop.name}">정선공영버스정류장</td>
+        </tr>
+        </tbody>
+    </table>
+    <button th:onclick="|location.href='@{/stops/add}'|"
+            class="bg-cyan-100 p-2 rounded-lg">터미널 추가</button>
+    <button th:onclick="|location.href='@{/stops/delete}'|"
+            class="bg-amber-100 p-2 rounded-lg">터미널 삭제</button>
+</div>
+</body>
+</html>

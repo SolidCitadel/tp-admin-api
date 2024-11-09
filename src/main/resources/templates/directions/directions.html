@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Directions</title>
+    <link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
+    <link href="../../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
+    <style>
+        a{
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>유형</th>
+            <th>출발</th>
+            <th>도착</th>
+            <th>소요시간</th>
+            <th>요금</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="direction : ${directions}">
+            <td th:text="${direction.id}">1</td>
+            <td th:text="${direction.type}">버스</td>
+            <td th:text="${direction.departure.name}">정선공영버스정류장</td>
+            <td th:text="${direction.destination.name}">원주공영버스터미널</td>
+            <td th:text="${direction.requiredTime}">1:40</td>
+            <td th:text="${direction.fare}">8900</td>
+<!--            <td><a href="direction.html" th:href="@{|/directions/${direction.id}|}"-->
+<!--                   th:text="${direction.departureTimes.size()}">-->
+<!--                1-->
+<!--            </a></td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

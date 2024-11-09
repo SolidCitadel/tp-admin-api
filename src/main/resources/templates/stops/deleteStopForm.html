@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Stops</title>
+    <link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
+    <link href="../../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
+    <style>
+    </style>
+</head>
+<body>
+<div>
+    <form action="/stops/delete" th:action method="post">
+        <div class="mb-2">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" class="form-control border-black bg-slate-100">
+        </div>
+        <div class="flex-row mt-2">
+                <button class="bg-cyan-200 p-1 rounded-lg" type="submit">제거</button>
+                <button class="bg-amber-200 p-1 rounded-lg"
+                        onclick="location.href='stops.html'"
+                        th:onclick="|location.href='@{/stops}'|"
+                        type="button">취소</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
