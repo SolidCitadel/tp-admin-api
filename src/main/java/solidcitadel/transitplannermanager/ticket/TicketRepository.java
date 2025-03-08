@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.domain.transport.ticket;
+package solidcitadel.transitplannermanager.ticket;
 
 import org.springframework.stereotype.Repository;
 

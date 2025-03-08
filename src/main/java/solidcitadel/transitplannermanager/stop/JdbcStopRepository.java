@@ -1,10 +1,9 @@
-package solidcitadel.transitplannermanager.domain.transport.stop;
+package solidcitadel.transitplannermanager.stop;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.io.Console;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

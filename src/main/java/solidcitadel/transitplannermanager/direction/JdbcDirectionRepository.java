@@ -1,9 +1,9 @@
-package solidcitadel.transitplannermanager.domain.transport.direction;
+package solidcitadel.transitplannermanager.direction;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
-import solidcitadel.transitplannermanager.domain.transport.Time;
-import solidcitadel.transitplannermanager.domain.transport.stop.Stop;
+import solidcitadel.transitplannermanager.ticket.transport.Time;
+import solidcitadel.transitplannermanager.stop.Stop;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

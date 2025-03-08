@@ -1,10 +1,10 @@
-package solidcitadel.transitplannermanager.domain.route;
+package solidcitadel.transitplannermanager.route;
 
 import lombok.Data;
-import solidcitadel.transitplannermanager.domain.transport.Time;
-import solidcitadel.transitplannermanager.domain.transport.direction.Direction;
-import solidcitadel.transitplannermanager.domain.transport.stop.Stop;
-import solidcitadel.transitplannermanager.domain.transport.ticket.Ticket;
+import solidcitadel.transitplannermanager.ticket.transport.Time;
+import solidcitadel.transitplannermanager.direction.Direction;
+import solidcitadel.transitplannermanager.stop.Stop;
+import solidcitadel.transitplannermanager.ticket.Ticket;
 
 import java.util.ArrayList;
 

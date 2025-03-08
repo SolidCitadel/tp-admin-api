@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.domain.transport.stop;
+package solidcitadel.transitplannermanager.stop;
 
 import org.springframework.stereotype.Repository;
 

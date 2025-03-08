@@ -1,7 +1,7 @@
-package solidcitadel.transitplannermanager.domain.plan;
+package solidcitadel.transitplannermanager.plan;
 
 import lombok.Data;
-import solidcitadel.transitplannermanager.domain.route.Route;
+import solidcitadel.transitplannermanager.route.Route;
 
 import java.util.ArrayList;
 

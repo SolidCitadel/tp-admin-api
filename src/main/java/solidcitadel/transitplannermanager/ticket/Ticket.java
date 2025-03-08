@@ -1,9 +1,9 @@
-package solidcitadel.transitplannermanager.domain.transport.ticket;
+package solidcitadel.transitplannermanager.ticket;
 
 import lombok.Data;
-import solidcitadel.transitplannermanager.domain.transport.Time;
-import solidcitadel.transitplannermanager.domain.transport.Type;
-import solidcitadel.transitplannermanager.domain.transport.stop.Stop;
+import solidcitadel.transitplannermanager.ticket.transport.Time;
+import solidcitadel.transitplannermanager.ticket.transport.Type;
+import solidcitadel.transitplannermanager.stop.Stop;
 
 @Data
 public class Ticket {

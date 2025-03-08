@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.domain.transport;
+package solidcitadel.transitplannermanager.ticket.transport;
 
 import lombok.Data;
 

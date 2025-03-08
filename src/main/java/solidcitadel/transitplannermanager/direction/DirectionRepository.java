@@ -1,6 +1,7 @@
-package solidcitadel.transitplannermanager.domain.transport.direction;
+package solidcitadel.transitplannermanager.direction;
 
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
