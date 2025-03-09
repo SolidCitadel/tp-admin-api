@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Directions</title>
-    <link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
-    <link href="../../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
-    <style>
-        a{
-            color: darkblue;
-        }
-    </style>
 </head>
 <body>
-<div>
-    <table>
+<main layout:fragment="content">
+    <table th:if="${not #lists.isEmpty(directions)}">
         <thead>
         <tr>
             <th>ID</th>
@@ -39,6 +34,6 @@
         </tr>
         </tbody>
     </table>
-</div>
+</main>
 </body>
 </html>
