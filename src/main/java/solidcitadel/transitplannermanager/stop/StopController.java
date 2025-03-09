@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/stops")
+//@Controller
+//@RequestMapping("/stops")
 @RequiredArgsConstructor
 public class StopController {
     private final JdbcStopRepository stopRepository;

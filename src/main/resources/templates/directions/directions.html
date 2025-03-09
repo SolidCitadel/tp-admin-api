@@ -8,7 +8,7 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <table th:if="${not #lists.isEmpty(directions)}">
+    <table class="mb-2" th:if="${not #lists.isEmpty(directions)}">
         <thead>
         <tr>
             <th>ID</th>
@@ -21,12 +21,12 @@
         </thead>
         <tbody>
         <tr th:each="direction : ${directions}">
-            <td th:text="${direction.id}">1</td>
-            <td th:text="${direction.type}">버스</td>
-            <td th:text="${direction.departure.name}">정선공영버스정류장</td>
-            <td th:text="${direction.destination.name}">원주공영버스터미널</td>
-            <td th:text="${direction.requiredTime}">1:40</td>
-            <td th:text="${direction.fare}">8900</td>
+            <td class="p-1 border" th:text="${direction.id}">1</td>
+            <td class="p-1 border" th:text="${direction.departureStop.transportType}">버스</td>
+            <td class="p-1 border" th:text="${direction.departureStop.name}">정선공영버스정류장</td>
+            <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
+            <td class="p-1 border" th:text="${direction.requiredTime}">1:40</td>
+            <td class="p-1 border" th:text="${direction.fare}">8900</td>
 <!--            <td><a href="direction.html" th:href="@{|/directions/${direction.id}|}"-->
 <!--                   th:text="${direction.departureTimes.size()}">-->
 <!--                1-->
@@ -34,6 +34,10 @@
         </tr>
         </tbody>
     </table>
+    <button th:onclick="|location.href='@{/directions/new}'|"
+            class="bg-cyan-100 p-2 rounded-lg">노선 추가</button>
+    <button th:onclick="|location.href='@{/directions/delete}'|"
+            class="bg-amber-100 p-2 rounded-lg">노선 삭제</button>
 </main>
 </body>
 </html>

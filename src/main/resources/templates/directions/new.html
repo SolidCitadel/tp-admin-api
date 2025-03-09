@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>New Direction</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <form action="/directions" th:action="@{/directions}" method="post" th:object="${newDirectionForm}">
+        <table>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="name">이름</label>
+                </td>
+                <td class="p-1">
+                    <input type="text" id="name" th:field="*{name}"
+                           class="form-control border-black bg-slate-100 p-1">
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="departureStopId">출발지</label>
+                </td>
+                <td class="p-1">
+                    <select id="departureStopId" th:field="*{departureStopId}"
+                            class="form-control border-black bg-slate-100 p-1">
+                        <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"/>
+                    </select>
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="arrivalStop">도착지</label>
+                </td>
+                <td class="p-1">
+                    <select id="arrivalStopId" th:field="*{arrivalStopId}"
+                            class="form-control border-black bg-slate-100 p-1">
+                        <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"/>
+                    </select>
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="requiredTime">소요시간</label>
+                </td>
+                <td class="p-1">
+                    <input type="time" id="requiredTime" th:field="*{requiredTime}"
+                           class="form-control border-black bg-slate-100 p-1">
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="fare">요금</label>
+                </td>
+                <td class="p-1">
+                    <input type="number" id="fare" th:field="*{fare}"
+                           class="form-control border-black bg-slate-100 p-1">
+                </td>
+            </tr>
+        </table>
+        <div class="flex-row mt-2">
+            <button class="bg-cyan-100 py-1 px-2 rounded-lg" type="submit">추가</button>
+            <button class="bg-amber-100 py-1 px-2 rounded-lg"
+                    onclick="location.href='directions.html'"
+                    th:onclick="|location.href='@{/directions}'|"
+                    type="button">취소</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>
