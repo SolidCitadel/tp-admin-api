@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
-    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
-    <style>
-        button {
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-        }
-    </style>
 </head>
 <body>
-    <button class="bg-cyan-200" th:onclick="|location.href='@{/stops}'|">터미널 목록</button>
-    <button class="bg-emerald-200" th:onclick="|location.href='@{/directions}'|">노선 목록</button>
+    <main layout:fragment="content">
+        <button class="bg-cyan-100 p-2 rounded-lg" th:onclick="|location.href='@{/stops}'|">터미널 목록</button>
+        <button class="bg-emerald-100 p-2 rounded-lg" th:onclick="|location.href='@{/directions}'|">노선 목록</button>
+    </main>
 </body>
 </html>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Stops</title>
-    <link href="../../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" >
-    <link href="../../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" >
     <style>
     </style>
 </head>
 <body>
-<div>
-    <table class="mb-2">
+<main layout:fragment="content">
+    <table class="mb-2" th:if="${not #lists.isEmpty(stops)}">
         <thead>
         <tr>
             <th>ID</th>
@@ -24,10 +24,10 @@
         </tr>
         </tbody>
     </table>
-    <button th:onclick="|location.href='@{/stops/add}'|"
+    <button th:onclick="|location.href='@{/stops/new}'|"
             class="bg-cyan-100 p-2 rounded-lg">터미널 추가</button>
     <button th:onclick="|location.href='@{/stops/delete}'|"
             class="bg-amber-100 p-2 rounded-lg">터미널 삭제</button>
-</div>
+</main>
 </body>
 </html>
