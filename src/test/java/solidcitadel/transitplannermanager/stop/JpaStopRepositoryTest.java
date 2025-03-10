@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.jpastop;
+package solidcitadel.transitplannermanager.stop;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +21,11 @@ class JpaStopRepositoryTest {
     @Transactional
     @Rollback
     void save_and_find() {
-        JpaStop stop = new JpaStop("stop", TransportType.BUS);
+        Stop stop = new Stop("stop", TransportType.BUS);
 
         Long savedId = stopRepository.save(stop);
 
-        JpaStop foundStop = stopRepository.findById(savedId);
+        Stop foundStop = stopRepository.findById(savedId);
 
         assertEquals(foundStop.getId(), stop.getId());
         assertEquals(foundStop.getName(), stop.getName());

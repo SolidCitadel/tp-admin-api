@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.jpadirection.DTO;
+package solidcitadel.transitplannermanager.direction.DTO;
 
 import lombok.Data;
 

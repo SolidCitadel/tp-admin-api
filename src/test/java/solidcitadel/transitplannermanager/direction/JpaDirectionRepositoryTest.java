@@ -1,6 +1,5 @@
-package solidcitadel.transitplannermanager.jpadirection;
+package solidcitadel.transitplannermanager.direction;
 
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import solidcitadel.transitplannermanager.jpastop.JpaStop;
-import solidcitadel.transitplannermanager.jpastop.JpaStopRepository;
-import solidcitadel.transitplannermanager.jpastop.TransportType;
+import solidcitadel.transitplannermanager.stop.Stop;
+import solidcitadel.transitplannermanager.stop.JpaStopRepository;
+import solidcitadel.transitplannermanager.stop.TransportType;
 
 import java.time.LocalTime;
-import java.time.OffsetTime;
-import java.time.ZoneOffset;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,15 +30,15 @@ class JpaDirectionRepositoryTest {
     @Rollback
     void save_and_find() {
         LocalTime requiredTime = LocalTime.of(2, 10);
-        JpaStop departureStop = new JpaStop("departure", TransportType.BUS);
-        JpaStop arrivalStop = new JpaStop("arrival", TransportType.BUS);
+        Stop departureStop = new Stop("departure", TransportType.BUS);
+        Stop arrivalStop = new Stop("arrival", TransportType.BUS);
         stopRepository.save(departureStop);
         stopRepository.save(arrivalStop);
 
-        JpaDirection direction = new JpaDirection("direction", 12000, requiredTime, departureStop, arrivalStop);
+        Direction direction = new Direction("direction", 12000, requiredTime, departureStop, arrivalStop);
         Long savedId = directionRepository.save(direction);
 
-        JpaDirection foundDirection = directionRepository.findById(savedId);
+        Direction foundDirection = directionRepository.findById(savedId);
 
         assertEquals(foundDirection.getId(), direction.getId());
         assertEquals(foundDirection.getName(), direction.getName());

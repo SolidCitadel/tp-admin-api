@@ -1,34 +1,63 @@
 package solidcitadel.transitplannermanager.direction;
 
-import lombok.Data;
-import solidcitadel.transitplannermanager.ticket.transport.Time;
+import jakarta.persistence.*;
+import lombok.Getter;
 import solidcitadel.transitplannermanager.stop.Stop;
 
-import java.util.ArrayList;
+import java.time.LocalTime;
+import java.util.List;
 
-@Data
+@Entity
+@Table(name = "direction")
+@Getter
 public class Direction {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "direction_id")
     private Long id;
-    private String type;
-    private Stop departure;
-    private Stop destination;
-    private Time requiredTime;
-    private Integer fare;
-    private ArrayList<Time> departureTimes;
 
-    public Direction() {
-    }
+    private String name;
+    private int fare;
+    private LocalTime requiredTime;
 
-    public Direction(String type, Stop departure, Stop destination, Time requiredTime, Integer fare, ArrayList<Time> departureTimes) {
-        this.type = type;
-        this.departure = departure;
-        this.destination = destination;
-        this.requiredTime = requiredTime;
+    @ElementCollection
+    @CollectionTable(name = "departure_time", joinColumns = @JoinColumn(name = "direction_id"))
+    private List<LocalTime> departureTimes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "departure_stop_id")
+    private Stop departureStop;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "arrival_stop_id")
+    private Stop arrivalStop;
+
+    protected Direction() {}
+
+    public Direction(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
+        this.name = name;
         this.fare = fare;
-        this.departureTimes = departureTimes;
+        this.requiredTime = requiredTime;
+        changeDepartureStop(departureStop);
+        changeArrivalStop(arrivalStop);
     }
 
-    public java.lang.String StopsToString(){
-        return departure.toString() + " - " + destination.toString();
+    public void update(String name, int fare, LocalTime requiredTime) {
+        this.name = name;
+        this.fare = fare;
+        this.requiredTime = requiredTime;
     }
+
+    //== 연관관계 메서드 ==//
+    public void changeDepartureStop(Stop departureStop) {
+        this.departureStop = departureStop;
+        departureStop.getDirectionsDeparture().add(this);
+    }
+
+    public void changeArrivalStop(Stop arrivalStop) {
+        this.arrivalStop = arrivalStop;
+        arrivalStop.getDirectionsArrival().add(this);
+    }
+
 }

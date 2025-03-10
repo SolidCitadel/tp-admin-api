@@ -1,9 +1,9 @@
 package solidcitadel.transitplannermanager.stop;
 
-import java.util.*;
+import java.util.List;
 
-public interface StopRepository {
-    Long save(Stop stop);
+public interface StopService {
+    void save(Stop stop);
 
     Stop findById(Long id);
 

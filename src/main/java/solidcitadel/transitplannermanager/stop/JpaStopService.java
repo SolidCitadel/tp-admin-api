@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.jpastop;
+package solidcitadel.transitplannermanager.stop;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,20 +9,20 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class JpaStopService {
+public class JpaStopService implements StopService {
 
-    private final JpaStopRepository stopRepository;
+    private final StopRepository stopRepository;
 
     @Transactional
-    public void save(JpaStop stop) {
+    public void save(Stop stop) {
         stopRepository.save(stop);
     }
 
-    public JpaStop findById(Long id) {
+    public Stop findById(Long id) {
         return stopRepository.findById(id);
     }
 
-    public List<JpaStop> findAll() {
+    public List<Stop> findAll() {
         return stopRepository.findAll();
     }
 }

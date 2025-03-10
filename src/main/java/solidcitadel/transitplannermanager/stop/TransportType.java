@@ -1,4 +1,4 @@
-package solidcitadel.transitplannermanager.jpastop;
+package solidcitadel.transitplannermanager.stop;
 
 public enum TransportType {
     BUS,
