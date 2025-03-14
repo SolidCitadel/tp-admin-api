@@ -1,12 +1,6 @@
 package solidcitadel.transitplannermanager.direction;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DirectionRepository {
-
-    Long save(Direction direction);
-
-    Direction findById(Long id);
-
-    List<Direction> findAll();
+public interface DirectionRepository extends JpaRepository<Direction, Long> {
 }

@@ -1,11 +1,6 @@
 package solidcitadel.transitplannermanager.stop;
 
-import java.util.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StopRepository {
-    Long save(Stop stop);
-
-    Stop findById(Long id);
-
-    List<Stop> findAll();
+public interface StopRepository extends JpaRepository<Stop, Long> {
 }
