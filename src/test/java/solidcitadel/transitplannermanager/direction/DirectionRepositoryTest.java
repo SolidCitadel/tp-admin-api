@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class JpaDirectionRepositoryTest {
+class DirectionRepositoryTest {
 
     @Autowired
-    private JpaDirectionRepository directionRepository;
+    private DirectionRepository directionRepository;
 
     @Autowired
-    private JpaStopRepository stopRepository;
+    private StopRepository stopRepository;
 
     @Test
     @Transactional

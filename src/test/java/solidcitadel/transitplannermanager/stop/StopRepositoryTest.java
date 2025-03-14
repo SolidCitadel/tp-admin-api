@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class JpaStopRepositoryTest {
+class StopRepositoryTest {
 
     @Autowired
     JpaStopRepository stopRepository;

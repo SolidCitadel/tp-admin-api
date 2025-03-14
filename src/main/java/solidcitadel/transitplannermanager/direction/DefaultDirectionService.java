@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class JpaDirectionService implements DirectionService{
+public class DefaultDirectionService implements DirectionService{
 
     private final JpaDirectionRepository directionRepository;
     private final JpaStopRepository stopRepository;
