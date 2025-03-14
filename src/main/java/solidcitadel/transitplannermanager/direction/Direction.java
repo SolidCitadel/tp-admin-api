@@ -35,12 +35,16 @@ public class Direction {
 
     protected Direction() {}
 
-    public Direction(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
+    private Direction(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
         this.name = name;
         this.fare = fare;
         this.requiredTime = requiredTime;
         changeDepartureStop(departureStop);
         changeArrivalStop(arrivalStop);
+    }
+
+    public static Direction create(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
+        return new Direction(name, fare, requiredTime, departureStop, arrivalStop);
     }
 
     public void update(String name, int fare, LocalTime requiredTime) {

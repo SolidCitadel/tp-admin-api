@@ -35,8 +35,8 @@ class DirectionRepositoryTest {
         stopRepository.save(departureStop);
         stopRepository.save(arrivalStop);
 
-        Direction direction = new Direction("direction", 12000, requiredTime, departureStop, arrivalStop);
-        Long savedId = directionRepository.save(direction);
+        Direction direction = Direction.create("direction", 12000, requiredTime, departureStop, arrivalStop);
+        Long savedId = directionRepository.save(direction).getId();
 
         Direction foundDirection = directionRepository.findById(savedId);
 
