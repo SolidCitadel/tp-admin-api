@@ -1,5 +1,6 @@
 package solidcitadel.transitplannermanager.stop;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,8 @@ public class DefaultStopService implements StopService {
     }
 
     public Stop findById(Long id) {
-        return stopRepository.findById(id);
+        return stopRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Stop not found"));
     }
 
     public List<Stop> findAll() {

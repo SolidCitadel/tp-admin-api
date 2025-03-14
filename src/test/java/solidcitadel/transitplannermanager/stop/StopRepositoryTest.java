@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StopRepositoryTest {
 
     @Autowired
-    JpaStopRepository stopRepository;
+    StopRepository stopRepository;
 
     @Test
     @Transactional
@@ -23,9 +23,9 @@ class StopRepositoryTest {
     void save_and_find() {
         Stop stop = new Stop("stop", TransportType.BUS);
 
-        Long savedId = stopRepository.save(stop);
+        Long savedId = stopRepository.save(stop).getId();
 
-        Stop foundStop = stopRepository.findById(savedId);
+        Stop foundStop = stopRepository.findById(savedId).orElseThrow();
 
         assertEquals(foundStop.getId(), stop.getId());
         assertEquals(foundStop.getName(), stop.getName());

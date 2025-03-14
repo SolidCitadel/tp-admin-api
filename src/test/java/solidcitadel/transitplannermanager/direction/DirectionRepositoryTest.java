@@ -8,7 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import solidcitadel.transitplannermanager.stop.Stop;
-import solidcitadel.transitplannermanager.stop.JpaStopRepository;
+import solidcitadel.transitplannermanager.stop.StopRepository;
 import solidcitadel.transitplannermanager.stop.TransportType;
 
 import java.time.LocalTime;
@@ -38,7 +38,7 @@ class DirectionRepositoryTest {
         Direction direction = Direction.create("direction", 12000, requiredTime, departureStop, arrivalStop);
         Long savedId = directionRepository.save(direction).getId();
 
-        Direction foundDirection = directionRepository.findById(savedId);
+        Direction foundDirection = directionRepository.findById(savedId).orElseThrow();
 
         assertEquals(foundDirection.getId(), direction.getId());
         assertEquals(foundDirection.getName(), direction.getName());

@@ -1,11 +1,12 @@
 package solidcitadel.transitplannermanager.direction;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solidcitadel.transitplannermanager.direction.DTO.NewDirectionForm;
 import solidcitadel.transitplannermanager.stop.Stop;
-import solidcitadel.transitplannermanager.stop.JpaStopRepository;
+import solidcitadel.transitplannermanager.stop.StopService;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DefaultDirectionService implements DirectionService{
 
-    private final JpaDirectionRepository directionRepository;
-    private final JpaStopRepository stopRepository;
+    private final DirectionRepository directionRepository;
+    private final StopService stopService;
 
     @Transactional
     public void save(Direction direction) {
@@ -23,7 +24,8 @@ public class DefaultDirectionService implements DirectionService{
     }
 
     public Direction findById(Long id) {
-        return directionRepository.findById(id);
+        return directionRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Direction not found"));
     }
 
     public List<Direction> findAll() {
