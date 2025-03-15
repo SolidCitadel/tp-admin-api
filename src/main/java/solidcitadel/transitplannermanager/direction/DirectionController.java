@@ -29,7 +29,7 @@ public class DirectionController {
     public String direction(@PathVariable Long directionId, Model model) {
         Direction direction = directionService.findById(directionId);
         model.addAttribute("direction", direction);
-        return "directions/direction";
+        return "directions/detail";
     }
 
     @GetMapping("/new")
