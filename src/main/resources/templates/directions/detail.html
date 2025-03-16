@@ -22,17 +22,17 @@
         </thead>
         <tbody>
         <tr>
-            <td th:text="${direction.id}">1</td>
-            <td th:text="${direction.departureStop.transportType}">버스</td>
-            <td th:text="${direction.departureStop.name}">정선공영버스정류장</td>
-            <td th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
-            <td th:text="${direction.requiredTime}">1:40</td>
-            <td th:text="${direction.fare}">8900</td>
-            <td th:text="${direction.departureTimes.size()}">1</td>
+            <td class="p-1 border" th:text="${direction.id}">1</td>
+            <td class="p-1 border" th:text="${direction.departureStop.transportType}">버스</td>
+            <td class="p-1 border" th:text="${direction.departureStop.name}">정선공영버스정류장</td>
+            <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
+            <td class="p-1 border" th:text="${direction.requiredTime}">1:40</td>
+            <td class="p-1 border" th:text="${direction.fare}">8900</td>
+            <td class="p-1 border" th:text="${direction.departureTimes.size()}">1</td>
         </tr>
         </tbody>
     </table>
-    <table>
+    <table th:if="${direction.departureTimes.size() > 0}">
         <thead>
         <tr>
             <th>Index</th>
@@ -41,8 +41,8 @@
         </thead>
         <tbody>
         <tr th:each="time : ${direction.departureTimes}">
-            <td th:text="${timeStat.index}">0</td>
-            <td th:text="${time.toString()}">00:00</td>
+            <td class="p-1 border" th:text="${timeStat.index}">0</td>
+            <td class="p-1 border" th:text="${time.toString()}">00:00</td>
         </tr>
         </tbody>
     </table>
