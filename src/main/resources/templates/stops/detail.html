@@ -4,30 +4,30 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Stops</title>
+    <title>Stop</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <table class="mb-2" th:if="${not #lists.isEmpty(stops)}">
+    <table class="mb-4">
         <thead>
         <tr>
             <th>ID</th>
             <th>이름</th>
+            <th>유형</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="stop : ${stops}">
-            <td class="p-1 border">
-                <a th:href="@{/stops/{stopId}(stopId=${stop.id})}" tabindex="0" th:text="${stop.id}"/>
-            </td>
+        <tr>
+            <td class="p-1 border" th:text="${stop.id}">1</td>
             <td class="p-1 border" th:text="${stop.name}">정선공영버스정류장</td>
+            <td class="p-1 border" th:text="${stop.transportType}">버스</td>
         </tr>
         </tbody>
     </table>
     <button th:onclick="|location.href='@{/stops/new}'|"
-            class="bg-cyan-100 p-2 rounded-lg">터미널 추가</button>
+            class="bg-cyan-100 p-2 rounded-lg">수정</button>
     <button th:onclick="|location.href='@{/stops/delete}'|"
-            class="bg-amber-100 p-2 rounded-lg">터미널 삭제</button>
+            class="bg-amber-100 p-2 rounded-lg">삭제</button>
 </main>
 </body>
 </html>

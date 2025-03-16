@@ -3,10 +3,7 @@ package solidcitadel.transitplannermanager.stop;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,4 +35,10 @@ public class StopController {
         return "redirect:/stops";
     }
 
+    @GetMapping("/{stopId}")
+    public String viewStop(@PathVariable("stopId") Long stopId, Model model) {
+        Stop stop = stopService.findById(stopId);
+        model.addAttribute("stop", stop);
+        return "stops/detail";
+    }
 }

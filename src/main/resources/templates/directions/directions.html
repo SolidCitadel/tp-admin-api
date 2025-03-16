@@ -21,7 +21,9 @@
         </thead>
         <tbody>
         <tr th:each="direction : ${directions}">
-            <td class="p-1 border" th:text="${direction.id}">1</td>
+            <td class="p-1 border">
+                <a th:href="@{/directions/{directionId}(directionId=${direction.id})}" tabindex="0" th:text="${direction.id}"/>
+            </td>
             <td class="p-1 border" th:text="${direction.departureStop.transportType}">버스</td>
             <td class="p-1 border" th:text="${direction.departureStop.name}">정선공영버스정류장</td>
             <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
