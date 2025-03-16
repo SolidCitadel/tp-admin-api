@@ -17,7 +17,6 @@ public class Direction {
     @Column(name = "direction_id")
     private Long id;
 
-    private String name;
     private int fare;
     private LocalTime requiredTime;
 
@@ -35,33 +34,45 @@ public class Direction {
 
     protected Direction() {}
 
-    private Direction(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
-        this.name = name;
+    private Direction(int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
         this.fare = fare;
         this.requiredTime = requiredTime;
         changeDepartureStop(departureStop);
         changeArrivalStop(arrivalStop);
     }
 
-    public static Direction create(String name, int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
-        return new Direction(name, fare, requiredTime, departureStop, arrivalStop);
+    public static Direction create(int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
+        return new Direction(fare, requiredTime, departureStop, arrivalStop);
     }
 
-    public void update(String name, int fare, LocalTime requiredTime) {
-        this.name = name;
+    public void update(int fare, LocalTime requiredTime, Stop departureStop, Stop arrivalStop) {
         this.fare = fare;
         this.requiredTime = requiredTime;
+        changeDepartureStop(departureStop);
+        changeArrivalStop(arrivalStop);
     }
 
     //== 연관관계 메서드 ==//
     public void changeDepartureStop(Stop departureStop) {
+        if (this.departureStop != null) {
+            this.departureStop.getDirectionsDeparture().remove(this);
+        }
+
         this.departureStop = departureStop;
-        departureStop.getDirectionsDeparture().add(this);
+
+        if (!departureStop.getDirectionsDeparture().contains(this))
+            departureStop.getDirectionsDeparture().add(this);
     }
 
     public void changeArrivalStop(Stop arrivalStop) {
+        if (this.arrivalStop != null) {
+            this.arrivalStop.getDirectionsArrival().remove(this);
+        }
+
         this.arrivalStop = arrivalStop;
-        arrivalStop.getDirectionsArrival().add(this);
+
+        if (!arrivalStop.getDirectionsArrival().contains(this))
+            arrivalStop.getDirectionsArrival().add(this);
     }
 
 }

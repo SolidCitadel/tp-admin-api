@@ -3,35 +3,39 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Stop</title>
+    <title>New Stop</title>
+    <script>
+        function setMethod(method){
+            document.getElementById("methodInput").value = method;
+        }
+    </script>
 </head>
 <body>
 <main layout:fragment="content">
-    <table class="mb-4">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>이름</th>
-            <th>유형</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="p-1 border" th:text="${stop.id}">1</td>
-            <td class="p-1 border" th:text="${stop.name}">정선공영버스정류장</td>
-            <td class="p-1 border" th:text="${stop.transportType}">버스</td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <button th:onclick="|location.href='@{/stops/new}'|"
-                class="bg-cyan-100 py-2 px-4 rounded-lg">수정</button>
-        <button th:onclick="|location.href='@{/stops/delete}'|"
-                class="bg-red-100 py-2 px-4 rounded-lg">삭제</button>
-        <button th:onclick="|location.href='@{/stops}'|"
-                class="bg-amber-100 py-2 px-4 rounded-lg">목록</button>
-    </div>
+    <form method="post" th:object="${stop}">
+        <input type="hidden" name="_method" id="methodInput">
+        <div class="mb-2">
+            <label for="name">이름</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control border-black bg-slate-100 p-1">
+        </div>
+        <div class="mb-2">
+            <label for="transportType">종류</label>
+            <select id="transportType" th:field="*{transportType}" class="form-control border-black bg-slate-100 p-1">
+                <option th:value="*{transportType}" th:text="*{transportType}" selected/>
+            </select>
+        </div>
+        <div>
+            <button type="submit" onclick="setMethod('PATCH')" class="bg-cyan-100 py-2 px-4 rounded-lg">
+                수정
+            </button>
+            <button type="submit" onclick="setMethod('DELETE')" class="bg-red-100 py-2 px-4 rounded-lg">
+                삭제
+            </button>
+            <button type="button" th:onclick="|location.href='@{/stops}'|" class="bg-amber-100 py-2 px-4 rounded-lg">
+                목록
+            </button>
+        </div>
+    </form>
 </main>
 </body>
 </html>

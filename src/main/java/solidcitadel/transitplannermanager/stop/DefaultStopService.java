@@ -27,4 +27,15 @@ public class DefaultStopService implements StopService {
     public List<Stop> findAll() {
         return stopRepository.findAll();
     }
+
+    @Transactional
+    public void deleteById(Long id) {
+        stopRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateField(Long stopId, Stop stop) {
+        Stop findStop = findById(stopId);
+        findStop.update(stop.getName());
+    }
 }

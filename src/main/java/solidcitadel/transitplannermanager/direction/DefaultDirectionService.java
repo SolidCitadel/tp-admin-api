@@ -37,12 +37,30 @@ public class DefaultDirectionService implements DirectionService{
         Stop departureStop = stopService.findById(newDirectionForm.getDepartureStopId());
         Stop arrivalStop = stopService.findById(newDirectionForm.getArrivalStopId());
 
-        Direction direction = Direction.create(newDirectionForm.getName(),
+        Direction direction = Direction.create(
                 newDirectionForm.getFare(),
                 newDirectionForm.getRequiredTime(),
                 departureStop,
                 arrivalStop);
 
         directionRepository.save(direction);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        directionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void update(Long id, NewDirectionForm newDirectionForm) {
+        Direction direction = findById(id);
+        Stop departureStop = stopService.findById(newDirectionForm.getDepartureStopId());
+        Stop arrivalStop = stopService.findById(newDirectionForm.getArrivalStopId());
+
+        direction.update(
+                newDirectionForm.getFare(),
+                newDirectionForm.getRequiredTime(),
+                departureStop,
+                arrivalStop);
     }
 }

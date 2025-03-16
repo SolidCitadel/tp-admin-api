@@ -28,7 +28,12 @@ public class DirectionController {
     @GetMapping("/{directionId}")
     public String direction(@PathVariable Long directionId, Model model) {
         Direction direction = directionService.findById(directionId);
-        model.addAttribute("direction", direction);
+        List<Stop> stops = stopService.findAll();
+        NewDirectionForm newDirectionForm = new NewDirectionForm(direction);
+
+        model.addAttribute("stops", stops);
+        model.addAttribute("newDirectionForm", newDirectionForm);
+        model.addAttribute("departureTimes", direction.getDepartureTimes());
         return "directions/detail";
     }
 
@@ -44,6 +49,18 @@ public class DirectionController {
     @PostMapping
     public String newDirection(@ModelAttribute("directionForm") NewDirectionForm newDirectionForm) {
         directionService.create(newDirectionForm);
+        return "redirect:/directions";
+    }
+
+    @PatchMapping("/{directionId}")
+    public String updateDirection(@PathVariable Long directionId, @ModelAttribute("directionForm") NewDirectionForm newDirectionForm) {
+        directionService.update(directionId, newDirectionForm);
+        return "redirect:/directions";
+    }
+
+    @DeleteMapping("/{directionId}")
+    public String deleteDirection(@PathVariable Long directionId) {
+        directionService.deleteById(directionId);
         return "redirect:/directions";
     }
 }

@@ -41,4 +41,18 @@ public class StopController {
         model.addAttribute("stop", stop);
         return "stops/detail";
     }
+
+    @PatchMapping("/{stopId}")
+    public String editStop(@PathVariable Long stopId, @ModelAttribute("stop") Stop stop) {
+        stopService.updateField(stopId, stop);
+        return "redirect:/stops";
+    }
+
+    @DeleteMapping("/{stopId}")
+    public String deleteStop(@PathVariable("stopId") Long stopId) {
+        stopService.deleteById(stopId);
+        return "redirect:/stops";
+    }
+
+
 }

@@ -3,7 +3,6 @@ package solidcitadel.transitplannermanager.direction;
 import solidcitadel.transitplannermanager.direction.DTO.NewDirectionForm;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DirectionService {
     void save(Direction direction);
@@ -13,4 +12,8 @@ public interface DirectionService {
     List<Direction> findAll();
 
     void create(NewDirectionForm newDirectionForm);
+
+    void deleteById(Long id);
+
+    void update(Long id, NewDirectionForm newDirectionForm);
 }

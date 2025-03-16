@@ -3,57 +3,71 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Direction</title>
+    <title>New Direction</title>
+    <script>
+        function setMethod(method){
+            document.getElementById("methodInput").value = method;
+        }
+    </script>
 </head>
 <body>
 <main layout:fragment="content">
-    <table class="mb-4">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>유형</th>
-            <th>출발</th>
-            <th>도착</th>
-            <th>소요시간</th>
-            <th>요금</th>
-            <th>대수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="p-1 border" th:text="${direction.id}">1</td>
-            <td class="p-1 border" th:text="${direction.departureStop.transportType}">버스</td>
-            <td class="p-1 border" th:text="${direction.departureStop.name}">정선공영버스정류장</td>
-            <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
-            <td class="p-1 border" th:text="${direction.requiredTime}">1:40</td>
-            <td class="p-1 border" th:text="${direction.fare}">8900</td>
-            <td class="p-1 border" th:text="${direction.departureTimes.size()}">1</td>
-        </tr>
-        </tbody>
-    </table>
-    <table th:if="${direction.departureTimes.size() > 0}">
-        <thead>
-        <tr>
-            <th>Index</th>
-            <th>출발시간</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="time : ${direction.departureTimes}">
-            <td class="p-1 border" th:text="${timeStat.index}">0</td>
-            <td class="p-1 border" th:text="${time.toString()}">00:00</td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <button th:onclick="|location.href='@{/directions/new}'|"
-                class="bg-cyan-100 py-2 px-4 rounded-lg">수정</button>
-        <button th:onclick="|location.href='@{/directions/delete}'|"
-                class="bg-red-100 py-2 px-4 rounded-lg">삭제</button>
-        <button th:onclick="|location.href='@{/directions}'|"
-                class="bg-amber-100 py-2 px-4 rounded-lg">목록</button>
-    </div>
+    <form method="post" th:object="${newDirectionForm}">
+        <input type="hidden" name="_method" id="methodInput">
+        <table class="mb-2">
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="departureStopId">출발지</label>
+                </td>
+                <td class="p-1">
+                    <select id="departureStopId" th:field="*{departureStopId}"
+                            class="form-control border-black bg-slate-100 p-1">
+                        <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"/>
+                    </select>
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="arrivalStopId">도착지</label>
+                </td>
+                <td class="p-1">
+                    <select id="arrivalStopId" th:field="*{arrivalStopId}"
+                            class="form-control border-black bg-slate-100 p-1">
+                        <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"/>
+                    </select>
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="requiredTime">소요시간</label>
+                </td>
+                <td class="p-1">
+                    <input type="time" id="requiredTime" th:field="*{requiredTime}"
+                           class="form-control border-black bg-slate-100 p-1">
+                </td>
+            </tr>
+            <tr class="p-1">
+                <td class="p-1">
+                    <label for="fare">요금</label>
+                </td>
+                <td class="p-1">
+                    <input type="number" id="fare" th:field="*{fare}"
+                           class="form-control border-black bg-slate-100 p-1">
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button type="submit" onclick="setMethod('PATCH')" class="bg-cyan-100 py-2 px-4 rounded-lg">
+                수정
+            </button>
+            <button type="submit" onclick="setMethod('DELETE')" class="bg-red-100 py-2 px-4 rounded-lg">
+                삭제
+            </button>
+            <button type="button" th:onclick="|location.href='@{/directions}'|" class="bg-amber-100 py-2 px-4 rounded-lg">
+                목록
+            </button>
+        </div>
+    </form>
 </main>
 </body>
 </html>
