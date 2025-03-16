@@ -13,6 +13,7 @@
         <tr>
             <th>ID</th>
             <th>이름</th>
+            <th>유형</th>
         </tr>
         </thead>
         <tbody>
@@ -21,13 +22,14 @@
                 <a th:href="@{/stops/{stopId}(stopId=${stop.id})}" tabindex="0" th:text="${stop.id}"/>
             </td>
             <td class="p-1 border" th:text="${stop.name}">정선공영버스정류장</td>
+            <td class="p-1 border" th:text="${stop.transportType}">버스</td>
         </tr>
         </tbody>
     </table>
     <button th:onclick="|location.href='@{/stops/new}'|"
-            class="bg-cyan-100 p-2 rounded-lg">터미널 추가</button>
-    <button th:onclick="|location.href='@{/stops/delete}'|"
-            class="bg-amber-100 p-2 rounded-lg">터미널 삭제</button>
+            class="bg-cyan-100 py-2 px-4 rounded-lg">터미널 추가</button>
+<!--    <button th:onclick="|location.href='@{/stops/delete}'|"-->
+<!--            class="bg-amber-100 py-2 px-4 rounded-lg">터미널 삭제</button>-->
 </main>
 </body>
 </html>

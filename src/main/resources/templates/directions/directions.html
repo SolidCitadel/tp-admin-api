@@ -17,6 +17,7 @@
             <th>도착</th>
             <th>소요시간</th>
             <th>요금</th>
+            <th>대수</th>
         </tr>
         </thead>
         <tbody>
@@ -29,17 +30,14 @@
             <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
             <td class="p-1 border" th:text="${direction.requiredTime}">1:40</td>
             <td class="p-1 border" th:text="${direction.fare}">8900</td>
-<!--            <td><a href="detail.html" th:href="@{|/directions/${direction.id}|}"-->
-<!--                   th:text="${direction.departureTimes.size()}">-->
-<!--                1-->
-<!--            </a></td>-->
+            <td class="p-1 border" th:text="${direction.departureTimes.size()}">0</td>
         </tr>
         </tbody>
     </table>
     <button th:onclick="|location.href='@{/directions/new}'|"
-            class="bg-cyan-100 p-2 rounded-lg">노선 추가</button>
-    <button th:onclick="|location.href='@{/directions/delete}'|"
-            class="bg-amber-100 p-2 rounded-lg">노선 삭제</button>
+            class="bg-cyan-100 py-2 px-4 rounded-lg">노선 추가</button>
+<!--    <button th:onclick="|location.href='@{/directions/delete}'|"-->
+<!--            class="bg-amber-100 py-2 px-4 rounded-lg">노선 삭제</button>-->
 </main>
 </body>
 </html>

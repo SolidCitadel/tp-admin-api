@@ -9,7 +9,7 @@
 <body>
 <main layout:fragment="content">
     <form action="/directions" th:action="@{/directions}" method="post" th:object="${newDirectionForm}">
-        <table>
+        <table class="mb-2">
             <tr class="p-1">
                 <td class="p-1">
                     <label for="name">이름</label>
@@ -32,7 +32,7 @@
             </tr>
             <tr class="p-1">
                 <td class="p-1">
-                    <label for="arrivalStop">도착지</label>
+                    <label for="arrivalStopId">도착지</label>
                 </td>
                 <td class="p-1">
                     <select id="arrivalStopId" th:field="*{arrivalStopId}"
@@ -60,9 +60,9 @@
                 </td>
             </tr>
         </table>
-        <div class="flex-row mt-2">
-            <button class="bg-cyan-100 py-1 px-2 rounded-lg" type="submit">추가</button>
-            <button class="bg-amber-100 py-1 px-2 rounded-lg"
+        <div>
+            <button class="bg-cyan-100 py-2 px-4 rounded-lg" type="submit">추가</button>
+            <button class="bg-amber-100 py-2 px-4 rounded-lg"
                     onclick="location.href='directions.html'"
                     th:onclick="|location.href='@{/directions}'|"
                     type="button">취소</button>
