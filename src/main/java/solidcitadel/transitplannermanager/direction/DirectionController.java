@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import solidcitadel.transitplannermanager.direction.DTO.NewDirectionForm;
+import solidcitadel.transitplannermanager.direction.DTO.TimeForm;
 import solidcitadel.transitplannermanager.stop.Stop;
 import solidcitadel.transitplannermanager.stop.StopService;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -47,13 +49,13 @@ public class DirectionController {
     }
 
     @PostMapping
-    public String newDirection(@ModelAttribute("directionForm") NewDirectionForm newDirectionForm) {
+    public String newDirection(@ModelAttribute NewDirectionForm newDirectionForm) {
         directionService.create(newDirectionForm);
         return "redirect:/directions";
     }
 
     @PatchMapping("/{directionId}")
-    public String updateDirection(@PathVariable Long directionId, @ModelAttribute("directionForm") NewDirectionForm newDirectionForm) {
+    public String updateDirection(@PathVariable Long directionId, @ModelAttribute NewDirectionForm newDirectionForm) {
         directionService.update(directionId, newDirectionForm);
         return "redirect:/directions";
     }
@@ -62,5 +64,25 @@ public class DirectionController {
     public String deleteDirection(@PathVariable Long directionId) {
         directionService.deleteById(directionId);
         return "redirect:/directions";
+    }
+
+    @GetMapping("/{directionId}/departure-times")
+    public String departureTimes(@PathVariable Long directionId, Model model) {
+        Direction direction = directionService.findById(directionId);
+        model.addAttribute("directionId", directionId);
+        model.addAttribute("departureTimes", direction.getDepartureTimes());
+        return "directions/departureTimes/departureTimes";
+    }
+
+    @PostMapping("/{directionId}/departure-times")
+    public String addDepartureTime(@PathVariable Long directionId, @ModelAttribute TimeForm timeForm) {
+        directionService.addDepartureTime(directionId, timeForm.getTime());
+        return "redirect:/directions/" + directionId + "/departure-times";
+    }
+
+    @DeleteMapping("/{directionId}/departure-times")
+    public String removeDepartureTime(@PathVariable Long directionId, @ModelAttribute TimeForm timeForm) {
+        directionService.removeDepartureTime(directionId, timeForm.getTime());
+        return "redirect:/directions/" + directionId + "/departure-times";
     }
 }

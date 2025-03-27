@@ -52,6 +52,14 @@ public class Direction {
         changeArrivalStop(arrivalStop);
     }
 
+    public void addDepartureTime(LocalTime departureTime) {
+        this.departureTimes.add(departureTime);
+    }
+
+    public void removeDepartureTime(LocalTime departureTime) {
+        this.departureTimes.remove(departureTime);
+    }
+
     //== 연관관계 메서드 ==//
     public void changeDepartureStop(Stop departureStop) {
         if (this.departureStop != null) {

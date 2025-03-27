@@ -2,6 +2,7 @@ package solidcitadel.transitplannermanager.direction;
 
 import solidcitadel.transitplannermanager.direction.DTO.NewDirectionForm;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface DirectionService {
@@ -16,4 +17,8 @@ public interface DirectionService {
     void deleteById(Long id);
 
     void update(Long id, NewDirectionForm newDirectionForm);
+
+    void addDepartureTime(Long id, LocalTime departureTimeId);
+
+    void removeDepartureTime(Long id, LocalTime departureTimeId);
 }

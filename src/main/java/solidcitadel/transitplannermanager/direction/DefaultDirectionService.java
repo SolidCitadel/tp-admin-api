@@ -8,6 +8,7 @@ import solidcitadel.transitplannermanager.direction.DTO.NewDirectionForm;
 import solidcitadel.transitplannermanager.stop.Stop;
 import solidcitadel.transitplannermanager.stop.StopService;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -62,5 +63,17 @@ public class DefaultDirectionService implements DirectionService{
                 newDirectionForm.getRequiredTime(),
                 departureStop,
                 arrivalStop);
+    }
+
+    @Transactional
+    public void addDepartureTime(Long id, LocalTime departureTime){
+        Direction direction = findById(id);
+        direction.addDepartureTime(departureTime);
+    }
+
+    @Transactional
+    public void removeDepartureTime(Long id, LocalTime departureTime){
+        Direction direction = findById(id);
+        direction.removeDepartureTime(departureTime);
     }
 }
