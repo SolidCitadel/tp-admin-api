@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <title>Directions</title>
 </head>
@@ -10,13 +10,13 @@
     <table class="mb-2" th:if="${not #lists.isEmpty(directions)}">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>유형</th>
-            <th>출발</th>
-            <th>도착</th>
-            <th>소요시간</th>
-            <th>요금</th>
-            <th>대수</th>
+            <th class="bg-gray-200">ID</th>
+            <th class="bg-gray-200">유형</th>
+            <th class="bg-gray-200">출발</th>
+            <th class="bg-gray-200">도착</th>
+            <th class="bg-gray-200">소요시간</th>
+            <th class="bg-gray-200">요금</th>
+            <th class="bg-gray-200">대수</th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +29,9 @@
             <td class="p-1 border" th:text="${direction.arrivalStop.name}">원주공영버스터미널</td>
             <td class="p-1 border" th:text="${direction.requiredTime}">1:40</td>
             <td class="p-1 border" th:text="${direction.fare}">8900</td>
-            <td class="p-1 border" th:text="${direction.departureTimes.size()}">0</td>
+            <td class="p-1 border">
+                <a th:href="@{/directions/{directionId}/departure-times(directionId=${direction.id})}" th:text="${direction.departureTimes.size()}"/>
+            </td>
         </tr>
         </tbody>
     </table>

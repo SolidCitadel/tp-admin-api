@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{/fragments/layout}">
 <head>
     <title>Stops</title>
 </head>
@@ -10,9 +10,9 @@
     <table class="mb-2" th:if="${not #lists.isEmpty(stops)}">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>이름</th>
-            <th>유형</th>
+            <th class="bg-gray-200">ID</th>
+            <th class="bg-gray-200">이름</th>
+            <th class="bg-gray-200">유형</th>
         </tr>
         </thead>
         <tbody>
