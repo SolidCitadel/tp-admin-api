@@ -3,9 +3,12 @@ package solidcitadel.transitplannermanager.direction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import solidcitadel.transitplannermanager.stop.Stop;
 import solidcitadel.transitplannermanager.stop.StopRepository;
@@ -18,12 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class DirectionRepositoryTest {
-
+    private final DirectionRepository directionRepository;
+    private final StopRepository stopRepository;
     @Autowired
-    private DirectionRepository directionRepository;
-
-    @Autowired
-    private StopRepository stopRepository;
+    public DirectionRepositoryTest(DirectionRepository directionRepository,
+                                   StopRepository stopRepository) {
+        this.directionRepository = directionRepository;
+        this.stopRepository = stopRepository;
+    }
 
     @Test
     @Transactional
@@ -35,13 +40,12 @@ class DirectionRepositoryTest {
         stopRepository.save(departureStop);
         stopRepository.save(arrivalStop);
 
-        Direction direction = Direction.create("direction", 12000, requiredTime, departureStop, arrivalStop);
+        Direction direction = Direction.create(12000, requiredTime, departureStop, arrivalStop);
         Long savedId = directionRepository.save(direction).getId();
 
         Direction foundDirection = directionRepository.findById(savedId).orElseThrow();
 
         assertEquals(foundDirection.getId(), direction.getId());
-        assertEquals(foundDirection.getName(), direction.getName());
         assertEquals(foundDirection.getFare(), direction.getFare());
         assertEquals(foundDirection.getArrivalStop().getId(), direction.getArrivalStop().getId());
         assertEquals(foundDirection.getDepartureStop().getId(), direction.getDepartureStop().getId());
