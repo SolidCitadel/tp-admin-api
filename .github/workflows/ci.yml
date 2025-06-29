@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4 # 1. 소스 코드 체크아웃
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1 # 2. AWS 인증 설정
+        uses: aws-actions/configure-aws-credentials@v4 # 2. AWS 인증 설정
         id: configure-aws-credentials
         with:
           role-to-assume: arn:aws:iam::904924507098:role/github-actions-ecr-push-role # 1단계에서 만든 IAM 역할의 ARN
@@ -28,6 +28,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1 # 3. ECR 로그인
 
       - name: Build, tag, and push image to Amazon ECR
+        id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} # ECR 로그인 결과에서 레지스트리 주소 가져오기
           ECR_REPOSITORY: tp-admin-api # ECR 리포지토리 이름
@@ -37,3 +38,33 @@ jobs:
           ./gradlew build -x test --no-daemon
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Create imagedefinitions.json for CodeDeploy
+        id: create-imagedef
+        run: |
+          # CodeDeploy가 사용할 imagedefinitions.json 파일을 동적으로 생성
+          printf '[{"name":"tp-admin-api-container","imageUri":"%s"}]' ${{ steps.build-image.outputs.image }} > imagedefinitions.json
+          echo "imagedefinitions.json created"
+          cat imagedefinitions.json
+
+      - name: Make zip file for CodeDeploy
+        # 소스코드, appspec.yml, scripts, 그리고 방금 만든 imagedefinitions.json을 함께 압축
+        run: zip -r deploy.zip . -x ".git/*" ".github/*"
+
+      - name: Upload zip to S3
+        id: upload-s3
+        run: |
+          # 압축 파일을 CodeDeploy가 가져갈 수 있도록 S3에 업로드
+          S3_BUCKET="solidcitadel-codepipeline-artifacts-20250629" # 아티팩트용 S3 버킷 이름
+          aws s3 cp deploy.zip s3://$S3_BUCKET/deploy.zip
+          echo "s3_bucket=$S3_BUCKET" >> $GITHUB_OUTPUT
+          echo "s3_key=deploy.zip" >> $GITHUB_OUTPUT
+
+      - name: Deploy to EC2 via CodeDeploy
+        run: |
+          # AWS CLI를 사용하여 CodeDeploy 배포를 생성(시작)
+          aws deploy create-deployment \
+            --application-name tp-admin-api \
+            --deployment-group-name tp-admin-api-dev-group \
+            --s3-location bucket=${{ steps.upload-s3.outputs.s3_bucket }},key=${{ steps.upload-s3.outputs.s3_key }},bundleType=zip
