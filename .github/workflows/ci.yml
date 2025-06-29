@@ -1,51 +1,60 @@
-name: CI - Build and Push to ECR
+name: CI/CD - Build, Push to ECR, and Deploy to EC2
 
 on:
   push:
-    branches: [ "main" ] # main 브랜치에 푸시될 때 실행
+    branches: [ "main" ]
+  workflow_dispatch: # 수동 실행을 위한 트리거 추가
 
 permissions:
-  id-token: write # OIDC 토큰을 발급받기 위한 권한
-  contents: read  # 리포지토리 코드를 읽기 위한 권한
+  id-token: write
+  contents: read
 
 jobs:
   # =================================================
   # 1. Build Job: 이미지를 빌드하고 ECR에 푸시
   # =================================================
   build:
-    runs-on: ubuntu-latest # 워크플로우를 실행할 가상 환경
-    
+    name: Build and Push to ECR
+    runs-on: ubuntu-latest
+    # 이 작업의 결과물(outputs)을 다른 작업에서 사용할 수 있도록 명시적으로 선언합니다.
+    outputs:
+      image_uri: ${{ steps.build-image.outputs.image_uri }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # 1. 소스 코드 체크아웃
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4 # 2. AWS 인증 설정
-        id: configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_ROLE }} # 1단계에서 만든 IAM 역할의 ARN
+          role-to-assume: ${{ vars.AWS_ROLE }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1 # 3. ECR 로그인
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build, tag, and push image
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} # ECR 로그인 결과에서 레지스트리 주소 가져오기
-          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }} # ECR 리포지토리 이름
-          IMAGE_TAG: ${{ github.sha }} # Git 커밋 해시 전체를 태그로 사용
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           chmod +x ./gradlew
           ./gradlew build -x test --no-daemon
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          FULL_IMAGE_NAME="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build -t $FULL_IMAGE_NAME .
+          docker push $FULL_IMAGE_NAME
+          echo "image_uri=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
 
+  # =================================================
+  # 2. Deploy Job: EC2에 배포
+  # =================================================
   deploy:
+    name: Deploy to EC2
     runs-on: ubuntu-latest
-    needs: build
+    needs: build # 'build' 작업이 성공해야만 이 작업이 실행됩니다.
     
     steps:
       - name: Checkout repository
@@ -58,8 +67,15 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
           
       - name: Create imagedefinitions.json for CodeDeploy
+        env:
+          # needs 컨텍스트를 사용하여 build 작업의 출력값을 직접, 안전하게 참조합니다.
+          IMAGE_URI: ${{ needs.build.outputs.image_uri }}
+          CONTAINER_NAME: ${{ vars.CONTAINER_NAME }}
         run: |
-          printf '[{"name":"%s","imageUri":"%s"}]' ${{ vars.CONTAINER_NAME }} ${{ steps.build-image.outputs.image }} > imagedefinitions.json
+          echo "Received Image URI to deploy: $IMAGE_URI"
+          printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI" > imagedefinitions.json
+          echo "Generated imagedefinitions.json content:"
+          cat imagedefinitions.json
 
       - name: Make zip file for CodeDeploy
         run: zip -r deploy.zip . -x ".git/*" ".github/*"
