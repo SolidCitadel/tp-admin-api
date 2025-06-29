@@ -15,8 +15,8 @@ public class DefaultStopService implements StopService {
     private final StopRepository stopRepository;
 
     @Transactional
-    public void save(Stop stop) {
-        stopRepository.save(stop);
+    public Long save(Stop stop) {
+        return stopRepository.save(stop).getId();
     }
 
     public Stop findById(Long id) {

@@ -3,7 +3,7 @@ package solidcitadel.transitplannermanager.stop;
 import java.util.List;
 
 public interface StopService {
-    void save(Stop stop);
+    Long save(Stop stop);
 
     Stop findById(Long id);
 
