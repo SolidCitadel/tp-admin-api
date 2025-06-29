@@ -16,22 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4 # 1. 소스 코드 체크아웃
 
-      - name: 'Decode OIDC Token'
-        uses: actions/github-script@v6
-        id: decode-token
-        with:
-          script: |
-            const token = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN
-            const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
-            console.log(payload)
-            return payload
-          result-encoding: json
-
-      - name: Print subject claim
-        run: echo "The subject claim is ${{ steps.decode-token.outputs.result.sub }}"
-
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4 # 2. AWS 인증 설정
+        uses: aws-actions/configure-aws-credentials@v1 # 2. AWS 인증 설정
+        id: configure-aws-credentials
         with:
           role-to-assume: arn:aws:iam::904924507098:role/github-actions-ecr-push-role # 1단계에서 만든 IAM 역할의 ARN
           aws-region: ap-northeast-2
