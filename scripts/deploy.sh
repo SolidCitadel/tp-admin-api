@@ -19,7 +19,6 @@ fi
 
 # 3. 최신 이미지로 새 컨테이너 실행
 # --env-file 옵션으로 환경 변수 파일을 지정합니다.
-# 만약 환경 변수 파일이 없다면 이 옵션은 빼도 됩니다.
 if [ -f "$ENV_FILE" ]; then
     docker run -d --name $CONTAINER_NAME -p 8080:8080 --env-file $ENV_FILE $IMAGE_URI
 else
