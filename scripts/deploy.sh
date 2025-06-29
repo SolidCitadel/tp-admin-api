@@ -20,9 +20,9 @@ fi
 # 3. 최신 이미지로 새 컨테이너 실행
 # --env-file 옵션으로 환경 변수 파일을 지정합니다.
 if [ -f "$ENV_FILE" ]; then
-    docker run -d --name $CONTAINER_NAME -p 8080:8080 --env-file $ENV_FILE $IMAGE_URI
+    docker run -d --name $CONTAINER_NAME -p 8081:8081 --env-file $ENV_FILE $IMAGE_URI
 else
-    docker run -d --name $CONTAINER_NAME -p 8080:8080 $IMAGE_URI
+    docker run -d --name $CONTAINER_NAME -p 8081:8081 $IMAGE_URI
 fi
 
 # 4. 오래된 미사용 이미지 정리 (선택 사항)
