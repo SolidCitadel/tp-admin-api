@@ -4,7 +4,7 @@
 cd /home/ec2-user/app/
 
 # 환경 변수 파일 경로
-ENV_FILE="/home/ec2-user/app/my-app.env"
+ENV_FILE="/home/ec2-user/app/.env"
 
 # 1. imagedefinitions.json 파일에서 이미지 URI 추출
 # 이 파일은 CodeBuild 아티팩트로부터 CodeDeploy가 이 위치에 복사해 줍니다.
