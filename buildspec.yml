@@ -1,13 +1,17 @@
 version: 0.2
 
-env:
-  variables:
-    REPOSITORY_URI: "904924507098.dkr.ecr.ap-northeast-2.amazonaws.com/tp-admin-api"
-    CONTAINER_NAME: "tp-admin-api"
-
 phases:
   pre_build:
     commands:
+      - |
+        if [ -z "$REPOSITORY_URL" ]; then
+          echo "$REPOSITORY_URL not found"
+          exit 1
+        fi
+        if [ -z "$CONTAINER_NAME" ]; then
+          echo "$CONTAINER_NAME not found"
+          exit 1
+        fi
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
