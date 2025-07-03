@@ -1,0 +1,28 @@
+:snippets: build/generated-snippets
+
+= API 문서
+
+== 정류장 목록 조회
+
+include::{snippets}/get-stops/http-request.adoc[]
+include::{snippets}/get-stops/http-response.adoc[]
+
+== 정류장 생성
+
+include::{snippets}/create-stop/http-request.adoc[]
+include::{snippets}/create-stop/http-response.adoc[]
+
+== 정류장 상세 조회
+
+include::{snippets}/get-stop-detail/http-request.adoc[]
+include::{snippets}/get-stop-detail/http-response.adoc[]
+
+== 정류장 수정
+
+include::{snippets}/update-stop/http-request.adoc[]
+include::{snippets}/update-stop/http-response.adoc[]
+
+== 정류장 삭제
+
+include::{snippets}/delete-stop/http-request.adoc[]
+include::{snippets}/delete-stop/http-response.adoc[]
