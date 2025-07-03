@@ -20,8 +20,8 @@ public class DefaultDirectionService implements DirectionService{
     private final StopService stopService;
 
     @Transactional
-    public void save(Direction direction) {
-        directionRepository.save(direction);
+    public Long save(Direction direction) {
+        return directionRepository.save(direction).getId();
     }
 
     public Direction findById(Long id) {
@@ -33,6 +33,7 @@ public class DefaultDirectionService implements DirectionService{
         return directionRepository.findAll();
     }
 
+    // Deprecated
     @Transactional
     public void create(NewDirectionForm newDirectionForm) {
         Stop departureStop = stopService.findById(newDirectionForm.getDepartureStopId());
@@ -48,10 +49,19 @@ public class DefaultDirectionService implements DirectionService{
     }
 
     @Transactional
+    public Long create(int fare, LocalTime requiredTime, Long departureStopId, Long arrivalStopId) {
+        Stop departureStop = stopService.findById(departureStopId);
+        Stop arrivalStop = stopService.findById(arrivalStopId);
+        Direction direction = Direction.create(fare, requiredTime, departureStop, arrivalStop);
+        return directionRepository.save(direction).getId();
+    }
+
+    @Transactional
     public void deleteById(Long id) {
         directionRepository.deleteById(id);
     }
 
+    // Deprecated
     @Transactional
     public void update(Long id, NewDirectionForm newDirectionForm) {
         Direction direction = findById(id);
@@ -63,6 +73,14 @@ public class DefaultDirectionService implements DirectionService{
                 newDirectionForm.getRequiredTime(),
                 departureStop,
                 arrivalStop);
+    }
+
+    @Transactional
+    public void update(Long id, int fare, LocalTime requiredTime, Long departureStopId, Long arrivalStopId) {
+        Direction target = findById(id);
+        Stop departureStop = stopService.findById(departureStopId);
+        Stop arrivalStop = stopService.findById(arrivalStopId);
+        target.update(fare, requiredTime, departureStop, arrivalStop);
     }
 
     @Transactional
