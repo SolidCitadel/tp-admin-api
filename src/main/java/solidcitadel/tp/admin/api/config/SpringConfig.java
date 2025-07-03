@@ -1,4 +1,4 @@
-package solidcitadel.tp.admin.api;
+package solidcitadel.tp.admin.api.config;
 
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
