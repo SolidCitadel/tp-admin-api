@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TransitPlannerManagerApplication {
+public class TpAdminApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TransitPlannerManagerApplication.class, args);
+		SpringApplication.run(TpAdminApiApplication.class, args);
 	}
 
 }
