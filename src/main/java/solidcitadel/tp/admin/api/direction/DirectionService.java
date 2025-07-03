@@ -1,7 +1,6 @@
 package solidcitadel.tp.admin.api.direction;
 
 import solidcitadel.tp.admin.api.direction.DTO.NewDirectionForm;
-import solidcitadel.tp.admin.api.stop.Stop;
 
 import java.time.LocalTime;
 import java.util.List;
