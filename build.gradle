@@ -47,6 +47,10 @@ test {
 	useJUnitPlatform()
 }
 
+jar {
+	enabled=false
+}
+
 asciidoctor {
 	inputs.dir("build/generated-snippets")
 	dependsOn test

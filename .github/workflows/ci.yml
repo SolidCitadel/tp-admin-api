@@ -77,8 +77,21 @@ jobs:
           echo "Generated imagedefinitions.json content:"
           cat imagedefinitions.json
 
+      - name: Prepare deploy directory
+        run: |
+          mkdir deploy
+          cp -r build/libs deploy/
+          cp Dockerfile deploy/
+          cp docker-compose.yml deploy/
+          cp -r nginx/ deploy/
+          cp appspec.yml deploy/
+          cp imagedefinitions.json deploy/
+
       - name: Make zip file for CodeDeploy
-        run: zip -r deploy.zip . -x ".git/*" ".github/*"
+        run: |
+          cd deploy
+          zip -r ../deploy.zip .
+          cd ..
 
       - name: Upload zip to S3
         id: upload-s3
