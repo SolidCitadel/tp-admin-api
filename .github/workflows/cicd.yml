@@ -1,8 +1,6 @@
 name: CI/CD - Build, Push to ECR, and Deploy to EC2
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch: # 수동 실행을 위한 트리거 추가
 
 permissions:
@@ -93,6 +91,7 @@ jobs:
           cp Dockerfile deploy/
           cp docker-compose.yml deploy/
           cp -r nginx/ deploy/
+          cp -r scripts/ deploy
           cp appspec.yml deploy/
           cp imagedefinitions.json deploy/
 
