@@ -25,6 +25,8 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
           
       - name: Download imagedefinitions.json from S3
+        env:
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
         run: aws s3 cp s3://$S3_BUCKET/imagedefinitions.json imagedefinitions.json
 
       - name: Create .env file

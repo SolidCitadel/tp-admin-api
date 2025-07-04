@@ -62,4 +62,6 @@ jobs:
           cat imagedefinitions.json
 
       - name: Upload imagedefinitions.json to S3
+        env:
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
         run: aws s3 cp imagedefinitions.json s3://$S3_BUCKET/imagedefinitions.json
