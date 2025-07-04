@@ -90,7 +90,6 @@ jobs:
         run: |
           mkdir deploy
           cp .env deploy/
-          cp -r build/libs deploy/
           cp Dockerfile deploy/
           cp docker-compose.yml deploy/
           cp -r nginx/ deploy/
