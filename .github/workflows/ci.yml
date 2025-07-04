@@ -77,9 +77,19 @@ jobs:
           echo "Generated imagedefinitions.json content:"
           cat imagedefinitions.json
 
+      - name: Create .env file
+        run: |
+          echo "SPRING_APPLICATION_NAME=${{ vars.SPRING_APPLICATION_NAME }}" >> .env
+          echo "SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}" >> .env
+          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
+          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "CORS_ALLOWED_ORIGINS=${{ vars.CORS_ALLOWED_ORIGINS }}" >> .env
+
       - name: Prepare deploy directory
         run: |
           mkdir deploy
+          cp .env deploy/
           cp -r build/libs deploy/
           cp Dockerfile deploy/
           cp docker-compose.yml deploy/
