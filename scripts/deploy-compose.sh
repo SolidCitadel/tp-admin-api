@@ -8,13 +8,18 @@ IMAGE_URI=$(cat imagedefinitions.json | jq -r '.[0].imageUri')
 
 # 2. 추출한 이미지 URI를 환경 변수로 내보내기(export)
 #    이렇게 해야 docker-compose.yml 파일이 ${SPRING_APP_IMAGE_URI} 변수를 읽을 수 있습니다.
-export SPRING_APP_IMAGE_URI=$IMAGE_URIz
+export SPRING_APP_IMAGE_URI=$IMAGE_URI
 
-# 3. docker-compose로 애플리케이션 실행
+# 3. ECR 로그인 (AWS CLI v2 기준)
+ECR_REGISTRY=$(echo $IMAGE_URI | cut -d'/' -f1)
+AWS_REGION=ap-northeast-2
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+# 4. docker-compose로 애플리케이션 실행
 #    'up' 명령어는 변경된 서비스(예: 이미지가 바뀐 spring-app)만 지능적으로 다시 생성합니다.
 #    Nginx는 변경사항이 없으므로 건드리지 않습니다.
 #    -d: 백그라운드에서 실행
 docker-compose up -d
 
-# 4. 오래된 미사용 이미지 정리 (선택 사항)
+# 5. 오래된 미사용 이미지 정리 (선택 사항)
 docker image prune -f
