@@ -18,5 +18,5 @@ services:
     depends_on:
       - tp-admin-api
     volumes:
-      - /etc/letsencrypt/live/sldctd-tp-admin-api.kro.kr:/etc/nginx/certs
+      - ./nginx/certs:/etc/nginx/certs
     restart: always
