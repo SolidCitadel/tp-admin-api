@@ -1,4 +1,4 @@
-package solidcitadel.tp.admin.api.direction.DTO;
+package solidcitadel.tp.admin.api.direction.dto;
 
 import lombok.Data;
 

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import solidcitadel.tp.admin.api.stop.DTO.CreateStopRequest;
-import solidcitadel.tp.admin.api.stop.DTO.StopDetailDto;
-import solidcitadel.tp.admin.api.stop.DTO.StopSummaryDto;
+import solidcitadel.tp.admin.api.stop.dto.CreateStopRequest;
+import solidcitadel.tp.admin.api.stop.dto.StopDetailDto;
+import solidcitadel.tp.admin.api.stop.dto.StopSummaryDto;
 
 @RestController
 @RequestMapping("/api/stops")

@@ -3,9 +3,9 @@ package solidcitadel.tp.admin.api.direction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import solidcitadel.tp.admin.api.direction.DTO.CreateDirectionRequest;
-import solidcitadel.tp.admin.api.direction.DTO.DirectionDetailDTO;
-import solidcitadel.tp.admin.api.direction.DTO.DirectionSummaryDTO;
+import solidcitadel.tp.admin.api.direction.dto.CreateDirectionRequest;
+import solidcitadel.tp.admin.api.direction.dto.DirectionDetailDTO;
+import solidcitadel.tp.admin.api.direction.dto.DirectionSummaryDTO;
 
 import java.util.List;
 

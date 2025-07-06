@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import solidcitadel.tp.admin.api.direction.DTO.NewDirectionForm;
+import solidcitadel.tp.admin.api.direction.dto.NewDirectionForm;
 import solidcitadel.tp.admin.api.stop.Stop;
 import solidcitadel.tp.admin.api.stop.StopService;
 

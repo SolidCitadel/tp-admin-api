@@ -1,4 +1,4 @@
-package solidcitadel.tp.admin.api.stop.DTO;
+package solidcitadel.tp.admin.api.stop.dto;
 
 import lombok.Data;
 import solidcitadel.tp.admin.api.stop.Stop;

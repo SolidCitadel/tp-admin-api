@@ -1,8 +1,8 @@
-package solidcitadel.tp.admin.api.direction.DTO;
+package solidcitadel.tp.admin.api.direction.dto;
 
 import lombok.Data;
 import solidcitadel.tp.admin.api.direction.Direction;
-import solidcitadel.tp.admin.api.stop.DTO.StopSummaryDto;
+import solidcitadel.tp.admin.api.stop.dto.StopSummaryDto;
 
 import java.time.LocalTime;
 import java.util.List;
