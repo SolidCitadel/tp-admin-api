@@ -19,7 +19,7 @@ import solidcitadel.tp.admin.api.security.UserDetailsServiceImpl;
 
 import java.io.IOException;
 
-@Slf4j(topic = "JWT 검증 및 인가")
+@Slf4j(topic = "JWT_FILTER")
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
