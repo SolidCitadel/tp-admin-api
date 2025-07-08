@@ -60,6 +60,10 @@ public class Direction {
         this.departureTimes.remove(departureTime);
     }
 
+    public void replaceDepartureTimes(List<LocalTime> departureTimes) {
+        this.departureTimes = departureTimes;
+    }
+
     //== 연관관계 메서드 ==//
     public void changeDepartureStop(Stop departureStop) {
         if (this.departureStop != null) {

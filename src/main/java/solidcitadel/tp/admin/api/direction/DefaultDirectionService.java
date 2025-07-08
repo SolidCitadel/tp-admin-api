@@ -94,4 +94,10 @@ public class DefaultDirectionService implements DirectionService{
         Direction direction = findById(id);
         direction.removeDepartureTime(departureTime);
     }
+
+    @Transactional
+    public void replaceDepartureTimes(Long id, List<LocalTime> departureTimes){
+        Direction direction = findById(id);
+        direction.replaceDepartureTimes(departureTimes);
+    }
 }

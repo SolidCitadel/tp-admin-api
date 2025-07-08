@@ -7,6 +7,7 @@ import solidcitadel.tp.admin.api.direction.dto.CreateDirectionRequest;
 import solidcitadel.tp.admin.api.direction.dto.DirectionDetailDTO;
 import solidcitadel.tp.admin.api.direction.dto.DirectionSummaryDTO;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -54,6 +55,17 @@ public class DirectionApiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDirection(@PathVariable("directionId") Long directionId) {
         directionService.deleteById(directionId);
+    }
+
+    @GetMapping("/{directionId}/departure-times")
+    public List<LocalTime> getDepartureTimes(@PathVariable("directionId") Long directionId) {
+        Direction direction = directionService.findById(directionId);
+        return direction.getDepartureTimes();
+    }
+
+    @PutMapping("/{directionId}/departure-times")
+    public void updateDepartureTimes(@PathVariable("directionId") Long directionId, @RequestBody List<LocalTime> departureTimes) {
+        directionService.replaceDepartureTimes(directionId, departureTimes);
     }
 
 }

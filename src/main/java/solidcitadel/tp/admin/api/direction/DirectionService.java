@@ -23,4 +23,6 @@ public interface DirectionService {
     void addDepartureTime(Long id, LocalTime departureTime);
 
     void removeDepartureTime(Long id, LocalTime departureTime);
+
+    void replaceDepartureTimes(Long id, List<LocalTime> departureTimes);
 }
