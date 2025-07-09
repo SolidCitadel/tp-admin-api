@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import solidcitadel.tp.admin.api.security.UserDetailsServiceImpl;
@@ -25,17 +26,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
-
-    private final RequestMatcher loginPathMatcher;
-    private final RequestMatcher registerPathMatcher;
+    private final String[] whiteList;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        boolean loginMatch = loginPathMatcher.matches(request);
-        boolean registerMatch = registerPathMatcher.matches(request);
-        log.debug("shouldNotFilter: loginMatch={}, registerMatch={}, method={}, uri={}",
-                  loginMatch, registerMatch, request.getMethod(), request.getRequestURI());
-        return loginMatch || registerMatch;
+        String requestURI = request.getRequestURI();
+        PatternMatchUtils.simpleMatch(whiteList, requestURI);
+        log.debug("shouldNotFilter: method={}, uri={}", request.getMethod(), request.getRequestURI());
+        return PatternMatchUtils.simpleMatch(whiteList, requestURI);
     }
 
     @Override
