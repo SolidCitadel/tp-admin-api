@@ -15,9 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import solidcitadel.tp.admin.api.user.UserRoleEnum;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -39,7 +36,7 @@ public class JwtUtil {
     private Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-    public static final Logger logger = LoggerFactory.getLogger("JWT 로그");
+    public static final Logger logger = LoggerFactory.getLogger("JWT Util");
 
     @PostConstruct
     public void init() {
@@ -50,14 +47,13 @@ public class JwtUtil {
     public String createAccessToken(String username, UserRoleEnum role) {
         Date date = new Date();
         Date expiresAt = new Date(date.getTime() + accessTokenExpiration);
-        return BEARER_PREFIX +
-                Jwts.builder()
-                        .setSubject(username)
-                        .claim(AUTHORIZATION_KEY, role)
-                        .setExpiration(expiresAt)
-                        .setIssuedAt(date)
-                        .signWith(key, signatureAlgorithm)
-                        .compact();
+        return Jwts.builder()
+                .setSubject(username)
+                .claim(AUTHORIZATION_KEY, role)
+                .setExpiration(expiresAt)
+                .setIssuedAt(date)
+                .signWith(key, signatureAlgorithm)
+                .compact();
     }
 
     public String createRefreshToken(String username) {
@@ -72,9 +68,7 @@ public class JwtUtil {
     }
 
     public void addAccessTokenToCookie(String token, HttpServletResponse res) {
-        String encodedToken = URLEncoder.encode(token, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
-
-        ResponseCookie cookie = ResponseCookie.from(AUTHORIZATION_HEADER, encodedToken)
+        ResponseCookie cookie = ResponseCookie.from(AUTHORIZATION_HEADER, token)
                 .path("/")
                 .httpOnly(true)
                 .secure(true)
@@ -135,7 +129,7 @@ public class JwtUtil {
         if (cookies != null)
             for (Cookie cookie : cookies)
                 if (cookie.getName().equals(cookieName))
-                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
+                    return cookie.getValue();
         return null;
     }
 
