@@ -51,17 +51,16 @@ jobs:
           docker push $FULL_IMAGE_NAME
           echo "image_uri=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      - name: Create imagedefinitions.json for CodeDeploy
+      - name: Create tp-admin-api.txt
         env:
           IMAGE_URI: ${{ steps.push-image.outputs.image_uri }}
-          CONTAINER_NAME: ${{ vars.CONTAINER_NAME }}
         run: |
           echo "Received Image URI to deploy: $IMAGE_URI"
-          printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$IMAGE_URI" > imagedefinitions.json
-          echo "Generated imagedefinitions.json content:"
-          cat imagedefinitions.json
+          printf "$IMAGE_URI" > tp-admin-api.txt
+          echo "Generated tp-admin-api.txt content:"
+          cat tp-admin-api.txt
 
-      - name: Upload imagedefinitions.json to S3
+      - name: Upload tp-admin-api.txt to S3
         env:
           S3_BUCKET: ${{ vars.S3_BUCKET }}
-        run: aws s3 cp imagedefinitions.json s3://$S3_BUCKET/imagedefinitions.json
+        run: aws s3 cp tp-admin-api.txt s3://$S3_BUCKET/tp-admin-api.txt
