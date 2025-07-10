@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import solidcitadel.tp.admin.api.user.UserRoleEnum;
 
 import java.security.Key;
@@ -94,14 +93,6 @@ public class JwtUtil {
 
     public String getRefreshTokenFromCookie(HttpServletRequest req) {
         return getTokenFromCookie(req, REFRESH_TOKEN_HEADER);
-    }
-
-    public String substringToken(String tokenValue){
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(BEARER_PREFIX.length());
-        }
-        logger.error("Not a valid token");
-        throw new NullPointerException("Not a valid token");
     }
 
     public boolean validateToken(String token){

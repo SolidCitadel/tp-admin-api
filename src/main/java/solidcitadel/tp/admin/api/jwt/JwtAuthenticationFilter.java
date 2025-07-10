@@ -43,17 +43,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.debug("Token from cookie: {}", token != null ? "exists" : "null");
 
         if(StringUtils.hasText(token)) {
+            log.info("JWT token: {}", token);
 
-            String tokenValue = jwtUtil.substringToken(token);
-            log.info("JWT token: {}", tokenValue);
-
-            if (!jwtUtil.validateToken(tokenValue)) {
+            if (!jwtUtil.validateToken(token)) {
                 log.error("Token Error");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
 
-            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
+            Claims info = jwtUtil.getUserInfoFromToken(token);
             log.debug("User info from token: {}", info.getSubject());
 
             try {
