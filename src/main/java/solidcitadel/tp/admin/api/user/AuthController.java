@@ -1,6 +1,5 @@
 package solidcitadel.tp.admin.api.user;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import solidcitadel.tp.admin.api.jwt.JwtUtil;
 import solidcitadel.tp.admin.api.security.UserDetailsImpl;
 import solidcitadel.tp.admin.api.user.dto.LoginRequestDto;
 import solidcitadel.tp.admin.api.user.dto.SignupRequestDto;
@@ -21,9 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class UserController {
+public class AuthController {
 
-    private final UserService userService;
+    private final AuthService userService;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
