@@ -13,7 +13,7 @@ import java.util.List;
 public class Direction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "direction_id")
     private Long id;
 

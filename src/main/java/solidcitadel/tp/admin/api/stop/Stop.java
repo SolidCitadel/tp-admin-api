@@ -13,7 +13,7 @@ import java.util.List;
 public class Stop {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stop_id")
     private Long id;
 
