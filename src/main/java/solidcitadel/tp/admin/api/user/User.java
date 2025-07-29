@@ -1,15 +1,18 @@
 package solidcitadel.tp.admin.api.user;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import solidcitadel.tp.admin.api.plan.Plan;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Builder(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "user")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "users")
 public class User {
 
     @Id
@@ -29,14 +32,19 @@ public class User {
     @Column
     private String refreshToken;
 
-    @Builder
-    public User(String username, String password, UserRoleEnum role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Plan> plans = new ArrayList<>();
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public static User createUser(String username, String password, UserRoleEnum role){
+        return User.builder()
+                .username(username)
+                .password(password)
+                .role(role)
+                .build();
+    }
+
 }

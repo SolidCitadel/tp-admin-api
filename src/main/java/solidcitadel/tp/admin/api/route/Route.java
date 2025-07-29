@@ -1,31 +1,31 @@
 package solidcitadel.tp.admin.api.route;
 
-import lombok.Data;
-import solidcitadel.tp.admin.api.ticket.transport.Time;
-import solidcitadel.tp.admin.api.direction.Direction;
-import solidcitadel.tp.admin.api.stop.Stop;
-import solidcitadel.tp.admin.api.ticket.Ticket;
+import jakarta.persistence.*;
+import lombok.*;
+import solidcitadel.tp.admin.api.plan.Plan;
 
 import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Entity
+@Builder(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "route")
 public class Route {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private ArrayList<Stop> stops;
-    private ArrayList<Direction> directions;
-    private ArrayList<Ticket> tickets;
-    private Time departure;
-    private Time arrival;
-    private Integer fee;
 
-    public Route(String name) {
-        this.name = name;
-//        this.stops = new ArrayList<Stop>();
-//        this.destinations = destinations;
-//        this.tickets = tickets;
-//        this.departure = departure;
-//        this.arrival = arrival;
-        this.fee = 0;
-    }
+    @Column(nullable = false)
+    private String name;
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Segment> segments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "plan_id")
+    private Plan plan;
+
 }

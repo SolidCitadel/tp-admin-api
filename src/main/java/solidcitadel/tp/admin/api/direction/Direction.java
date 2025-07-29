@@ -17,6 +17,7 @@ public class Direction {
     @Column(name = "direction_id")
     private Long id;
 
+    private String name;
     private int fare;
     private LocalTime requiredTime;
 
